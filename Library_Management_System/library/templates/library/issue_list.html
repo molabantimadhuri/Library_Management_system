@@ -1,0 +1,79 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h2>Issue / Return History</h2>
+    <a href="{% url 'issue_book' %}" class="btn btn-primary">Issue Book</a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-6">
+                <label for="status" class="form-label">Filter</label>
+                <select id="status" name="status" class="form-select">
+                    <option value="">All</option>
+                    <option value="issued" {% if filter_status == 'issued' %}selected{% endif %}>Currently Issued</option>
+                    <option value="returned" {% if filter_status == 'returned' %}selected{% endif %}>Returned</option>
+                    <option value="overdue" {% if filter_status == 'overdue' %}selected{% endif %}>Overdue</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex gap-2 align-items-end">
+                <button type="submit" class="btn btn-primary flex-fill">Apply</button>
+                <a href="{% url 'issue_list' %}" class="btn btn-outline-secondary">Reset</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive card">
+    <table class="table table-striped table-hover mb-0">
+        <thead class="table-dark">
+            <tr>
+                <th>Issue ID</th>
+                <th>Book</th>
+                <th>Member</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Fine</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for issue in issues %}
+            <tr>
+                <td>{{ issue.id }}</td>
+                <td>{{ issue.book.title }}</td>
+                <td>{{ issue.member.name }}</td>
+                <td>{{ issue.issue_date }}</td>
+                <td>{{ issue.due_date }}</td>
+                <td>{{ issue.return_date|default:'-' }}</td>
+                <td>
+                    {% if issue.status == 'Overdue' %}<span class="badge bg-danger">Overdue</span>
+                    {% elif issue.status == 'Returned' %}<span class="badge bg-success">Returned</span>
+                    {% else %}<span class="badge bg-primary">Issued</span>
+                    {% endif %}
+                </td>
+                <td>₹{{ issue.fine }}</td>
+                <td>
+                    {% if issue.return_date %}
+                        <span class="text-muted">Returned</span>
+                    {% else %}
+                        <form method="post" action="{% url 'return_book' issue.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-success">Return</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9" class="text-center py-4">No issue records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

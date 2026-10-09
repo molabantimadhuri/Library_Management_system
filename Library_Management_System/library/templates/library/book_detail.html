@@ -1,0 +1,68 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h2>{{ book.title }}</h2>
+    <div class="btn-group">
+        <a href="{% url 'book_update' book.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'book_delete' book.pk %}" class="btn btn-danger" data-confirm="Delete this book?">Delete</a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Category:</strong> {{ book.category }}</p>
+                <p><strong>Total Copies:</strong> {{ book.copies }}</p>
+                <p><strong>Available Copies:</strong> {{ book.available_copies }}</p>
+                <p><strong>Issued Copies:</strong> {{ book.issued_copies }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">Issue History</h4>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Issue ID</th>
+                        <th>Member</th>
+                        <th>Issue Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                        <th>Fine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for issue in issues %}
+                    <tr>
+                        <td>{{ issue.id }}</td>
+                        <td>{{ issue.member.name }}</td>
+                        <td>{{ issue.issue_date }}</td>
+                        <td>{{ issue.due_date }}</td>
+                        <td>{{ issue.return_date|default:'-' }}</td>
+                        <td>
+                            {% if issue.status == 'Overdue' %}<span class="badge bg-danger">{{ issue.status }}</span>
+                            {% elif issue.status == 'Returned' %}<span class="badge bg-success">{{ issue.status }}</span>
+                            {% else %}<span class="badge bg-primary">{{ issue.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>₹{{ issue.fine }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center py-4">No issue records found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

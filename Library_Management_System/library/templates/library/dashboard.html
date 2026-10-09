@@ -1,0 +1,113 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Dashboard · The Reading Room{% endblock %}
+
+{% block content %}
+<section class="dashboard-hero mb-4 mb-lg-5">
+    <div>
+        <div class="eyebrow mb-3">A world between the covers</div>
+        <h1 class="mb-3">Welcome back to your library.</h1>
+        <p class="mb-4">A calm place to discover stories, care for your collection, and keep every reader connected.</p>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{% url 'book_list' %}" class="btn btn-light">Explore the collection</a>
+            <a href="{% url 'issue_book' %}" class="btn btn-outline-light">Issue a book</a>
+        </div>
+    </div>
+</section>
+
+<div class="d-flex justify-content-between align-items-end mb-3">
+    <div>
+        <div class="eyebrow text-success">At a glance</div>
+        <h2 class="page-heading h3 mb-0">Library overview</h2>
+    </div>
+    <span class="text-secondary small d-none d-sm-inline">{% now 'l, F j' %}</span>
+</div>
+
+<div class="row g-3">
+    <div class="col-6 col-lg-3">
+        <div class="card stats-card"><div class="card-body">
+            <span class="stat-icon">▤</span>
+            <div class="stat-label mt-3">Book titles</div>
+            <div class="stat-value">{{ total_books }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stats-card"><div class="card-body">
+            <span class="stat-icon">◉</span>
+            <div class="stat-label mt-3">Available copies</div>
+            <div class="stat-value">{{ total_available }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stats-card"><div class="card-body">
+            <span class="stat-icon">♙</span>
+            <div class="stat-label mt-3">Registered members</div>
+            <div class="stat-value">{{ total_members }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stats-card"><div class="card-body">
+            <span class="stat-icon">↗</span>
+            <div class="stat-label mt-3">Currently issued</div>
+            <div class="stat-value">{{ issued_books }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stats-card"><div class="card-body">
+            <span class="stat-icon">✓</span>
+            <div class="stat-label mt-3">Returned books</div>
+            <div class="stat-value">{{ returned_books }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stats-card"><div class="card-body">
+            <span class="stat-icon">!</span>
+            <div class="stat-label mt-3">Overdue books</div>
+            <div class="stat-value">{{ overdue_books }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stats-card"><div class="card-body">
+            <span class="stat-icon">₹</span>
+            <div class="stat-label mt-3">Fines recorded</div>
+            <div class="stat-value">₹{{ total_fines }}</div>
+        </div></div>
+    </div>
+</div>
+
+<div class="card mt-4 mt-lg-5">
+    <div class="card-header bg-white border-0 px-4 pt-4 d-flex justify-content-between align-items-center">
+        <div>
+            <div class="eyebrow text-success">The latest</div>
+            <h2 class="h4 mb-0">Recent activity</h2>
+        </div>
+        <a href="{% url 'issue_list' %}" class="btn btn-outline-primary btn-sm">View all</a>
+    </div>
+    <div class="card-body p-0 mt-3">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Book</th><th>Member</th><th>Issue date</th><th>Due date</th><th>Returned</th><th>Status</th><th>Fine</th></tr></thead>
+                <tbody>
+                    {% for issue in recent_activity %}
+                    <tr>
+                        <td class="fw-semibold">{{ issue.book.title }}</td>
+                        <td>{{ issue.member.name }}</td>
+                        <td>{{ issue.issue_date }}</td>
+                        <td>{{ issue.due_date }}</td>
+                        <td>{{ issue.return_date|default:'—' }}</td>
+                        <td>
+                            {% if issue.status == 'Overdue' %}<span class="badge bg-danger">{{ issue.status }}</span>
+                            {% elif issue.status == 'Returned' %}<span class="badge bg-success">{{ issue.status }}</span>
+                            {% else %}<span class="badge bg-primary">{{ issue.status }}</span>{% endif %}
+                        </td>
+                        <td>₹{{ issue.fine }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center text-secondary py-5">No activity yet — issue a book to get started.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

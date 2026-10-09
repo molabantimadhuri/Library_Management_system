@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+    --ink: #202b26;
+    --muted: #78817b;
+    --paper: #f6f5f1;
+    --green: #214b3b;
+    --green-light: #e5eee8;
+    --gold: #d8b975;
+    --line: #e9e8e1;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', Arial, sans-serif;
+}
+
+h1, h2, h3, h4, .serif {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+.navbar {
+    background: #193b30;
+    padding: 0.95rem 0;
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: 0.01em;
+}
+
+.brand-mark {
+    display: inline-grid;
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.55rem;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.77);
+    margin: 0 0.2rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #fff;
+}
+
+.app-shell {
+    max-width: 1440px;
+    min-height: calc(100vh - 145px);
+}
+
+.page-heading {
+    color: var(--ink);
+}
+
+.dashboard-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    padding: clamp(2rem, 5vw, 4rem);
+    border-radius: 1.25rem;
+    background:
+        linear-gradient(90deg, rgba(15, 39, 30, 0.94) 0%, rgba(21, 49, 37, 0.78) 52%, rgba(15, 39, 30, 0.14) 100%),
+        url('../images/library-hero.jpg') center 52% / cover,
+        #234738;
+    color: #fff;
+    box-shadow: 0 1.2rem 3rem rgba(27, 47, 36, 0.17);
+}
+
+.dashboard-hero h1 {
+    max-width: 650px;
+    font-size: clamp(2.15rem, 4vw, 3.55rem);
+    line-height: 1.12;
+}
+
+.dashboard-hero p {
+    max-width: 540px;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.eyebrow {
+    color: var(--gold);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+}
+
+.card {
+    border: 1px solid rgba(34, 57, 43, 0.06);
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 0.3rem 1.25rem rgba(39, 49, 40, 0.045);
+}
+
+.stats-card {
+    min-height: 142px;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.7rem 1.6rem rgba(39, 49, 40, 0.09);
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
+.stat-value {
+    margin-top: 0.45rem;
+    color: var(--ink);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.15rem;
+    font-weight: 700;
+}
+
+.stat-icon {
+    display: inline-grid;
+    width: 2.7rem;
+    height: 2.7rem;
+    place-items: center;
+    border-radius: 0.8rem;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 1.15rem;
+}
+
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: #fafaf8;
+}
+
+.table thead th {
+    color: #707a73;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.table th, .table td {
+    padding: 0.9rem 1rem;
+    vertical-align: middle;
+}
+
+.table-dark {
+    --bs-table-bg: #244638;
+    --bs-table-color: #fff;
+}
+
+input, select, textarea,
+.form-control, .form-select {
+    border-color: #dedfd8 !important;
+    border-radius: 0.65rem !important;
+}
+
+input:not([type='checkbox']):not([type='radio']),
+select, textarea {
+    min-height: 2.85rem;
+    padding: 0.7rem 0.85rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #7a9a86 !important;
+    box-shadow: 0 0 0 0.2rem rgba(63, 113, 82, 0.12);
+}
+
+.btn {
+    border-radius: 0.65rem;
+    font-weight: 600;
+    padding: 0.65rem 1rem;
+}
+
+.btn-primary {
+    border-color: var(--green);
+    background: var(--green);
+}
+
+.btn-primary:hover {
+    border-color: #18382b;
+    background: #18382b;
+}
+
+.btn-outline-primary {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.btn-outline-primary:hover {
+    border-color: var(--green);
+    background: var(--green);
+}
+
+.badge {
+    border-radius: 999px;
+    font-size: 0.76rem;
+    padding: 0.5em 0.8em;
+}
+
+.badge.bg-primary {
+    background-color: #356b54 !important;
+}
+
+.footer {
+    color: #858c84;
+}
+
+.auth-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1rem;
+    background:
+        linear-gradient(110deg, rgba(15, 38, 29, 0.76), rgba(14, 38, 30, 0.38)),
+        url('../images/library-hero.jpg') center / cover,
+        #203f32;
+}
+
+.auth-card {
+    width: min(100%, 460px);
+    padding: clamp(1.6rem, 5vw, 2.6rem);
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    border-radius: 1.2rem;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.24);
+}
+
+.auth-mark {
+    display: inline-grid;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1.2rem;
+    place-items: center;
+    border-radius: 1rem;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 1.4rem;
+}
+
+.auth-card h1 {
+    font-size: 2rem;
+}
+
+.auth-caption {
+    color: var(--muted);
+}
+
+.auth-card .btn {
+    min-height: 3rem;
+}
+
+@media (max-width: 767.98px) {
+    .dashboard-hero {
+        min-height: 250px;
+        background-position: center;
+    }
+
+    .table th, .table td {
+        padding: 0.75rem;
+    }
+}
