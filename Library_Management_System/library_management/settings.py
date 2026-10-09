@@ -22,6 +22,8 @@ ALLOWED_HOSTS = os.getenv(
     'localhost,127.0.0.1'
 ).split(',')
 
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
